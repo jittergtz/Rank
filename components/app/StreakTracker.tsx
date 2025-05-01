@@ -306,7 +306,7 @@ export default function StreakTracker() {
 
   return (
     <>
-      <Card className="w-full border-none">
+      <Card className="w-full border-none shadow-none">
         <CardHeader className="text-center">
         </CardHeader>
         <CardContent className="space-y-6">
@@ -354,7 +354,7 @@ export default function StreakTracker() {
               onClick={handleCheckIn}
               disabled={!canCheckIn}
               size="lg"
-              className={`w-full ${canCheckIn ? "bg-lime-300 hover:bg-lime-400" : "bg-slate-400"}`}
+              className={`w-full ${canCheckIn ? "bg-lime-300 hover:bg-lime-400" : "bg-neutral-500"}`}
             >
               {canCheckIn ? (
                 <>

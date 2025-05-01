@@ -7,16 +7,30 @@ import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import Link from "next/link";
 import "./globals.css";
+import { Metadata, Viewport } from "next";
+import OfflineBanner from "@/components/app/OfflineBanner";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
 
-export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
-};
+  export const metadata: Metadata = {
+    title: 'Deine App Name',
+    description: 'Beschreibung deiner App',
+    manifest: '/manifest.json',
+    icons: {
+      apple: '/icons/icon-192x192.png',
+    },
+  };
+
+  export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    themeColor: '#000000',
+  };
+  
 
 const geistSans = Geist({
   display: "swap",

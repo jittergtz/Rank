@@ -50,8 +50,7 @@ export default async function AuthButton() {
     );
   }
   return user ? (
-    <div className="flex items-center gap-4">
-      <ThemeSwitcher/>
+    <div className="flex flex items-center gap-4">
       <form action={signOutAction}>
         <Button type="submit" variant={"outline"}>
           Sign out

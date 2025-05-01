@@ -29,7 +29,7 @@ interface StreakData {
 }
 
 const RANKS = [
-  { name: "Beginner", threshold: 0, color: "bg-zinc-500" },
+  { name: "Beginner", threshold: 0, color: "bg-lime-300" },
   { name: "Bronze", threshold: 5, color: "bg-amber-400" },
   { name: "Silver", threshold: 10, color: "bg-slate-400" },
   { name: "Gold", threshold: 20, color: "bg-yellow-500" },
@@ -354,7 +354,7 @@ export default function StreakTracker() {
               onClick={handleCheckIn}
               disabled={!canCheckIn}
               size="lg"
-              className={`w-full ${canCheckIn ? "bg-lime-300 hover:bg-lime-400" : "bg-neutral-500"}`}
+              className={`w-full ${canCheckIn ? "bg-lime-300 hover:bg-lime-400 text-white" : "bg-neutral-500 text-white"}`}
             >
               {canCheckIn ? (
                 <>

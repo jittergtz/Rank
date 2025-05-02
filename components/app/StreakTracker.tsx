@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Trophy, AlertCircle, Undo2, Gift } from "lucide-react"
+import { CheckCircle, Trophy, AlertCircle, Undo2, Gift, PartyPopper } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,12 +30,12 @@ interface StreakData {
 }
 
 const RANKS = [
-  { name: "Beginner", threshold: 0, color: "bg-gradient-to-tl from-[#2D21D3] to-[#9E61CC]" },
-  { name: "Bronze", threshold: 5, color: "bg-amber-400" },
-  { name: "Silver", threshold: 10, color: "bg-slate-400" },
-  { name: "Gold", threshold: 20, color: "bg-yellow-500" },
-  { name: "Platinum", threshold: 40, color: "bg-emerald-500" },
-  { name: "Diamond", threshold: 80, color: "bg-blue-500" },
+  { name: "Beginner", threshold: 0, color: "bg-gradient-to-l from-[#14EFFF] to-[#FFA114]", img: "/images/HelloRank.jpg" },
+  { name: "Bronze", threshold: 1, color: "bg-gradient-to-r from-[#14ADFF] to-[#3446D1]", img: "/images/BronzeRank.jpg" },
+  { name: "Silver", threshold: 10, color: "bg-slate-400", img: "/images/HelloRank.jpg" },
+  { name: "Gold", threshold: 20, color: "bg-yellow-500", img: "/images/HelloRank.jpg" },
+  { name: "Platinum", threshold: 40, color: "bg-emerald-500", img: "/images/HelloRank.jpg" },
+  { name: "Diamond", threshold: 80, color: "bg-blue-500", img: "/images/HelloRank.jpg" },
 ]
 
 // Milestones at which users earn recovery tokens
@@ -59,6 +59,9 @@ export default function StreakTracker() {
   const [progress, setProgress] = useState(0)
   const [recoveryAvailable, setRecoveryAvailable] = useState(false)
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false)
+  // New state for congratulations modal
+  const [showCongratulations, setShowCongratulations] = useState(false)
+  const [newRankAchieved, setNewRankAchieved] = useState("")
   const { toast } = useToast()
 
   useEffect(() => {
@@ -199,6 +202,10 @@ export default function StreakTracker() {
       })
     }
 
+    // Check if rank changed
+    const prevRank = getRankFromCount(streakData.count)
+    const newRank = getRankFromCount(newCount)
+
     setStreakData((prev) => ({
       ...prev,
       count: newCount,
@@ -208,16 +215,10 @@ export default function StreakTracker() {
 
     setCanCheckIn(false)
 
-    // Check if rank changed
-    const prevRank = getRankFromCount(streakData.count)
-    const newRank = getRankFromCount(newCount)
-
     if (prevRank !== newRank) {
-      toast({
-        title: "New Rank Achieved!",
-        description: `Congratulations! You've reached ${newRank} rank!`,
-        variant: "default",
-      })
+      // Show congratulations modal instead of toast
+      setNewRankAchieved(newRank)
+      setShowCongratulations(true)
     } else {
       toast({
         title: "Streak Updated!",
@@ -289,6 +290,11 @@ export default function StreakTracker() {
     const rank = RANKS.find((r) => r.name === rankName)
     return rank?.color || "bg-zinc-500"
   }
+  
+  const getRankImage = (rankName: string) => {
+    const rank = RANKS.find((r) => r.name === rankName)
+    return rank?.img || "images/HelloRank.jpg"
+  }
 
   const getRecoveryTimeLeft = () => {
     if (!streakData.lastReset) return null
@@ -301,10 +307,6 @@ export default function StreakTracker() {
     return hoursLeft
   }
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
   return (
     <>
       <Card className="w-full border-none shadow-none">
@@ -312,18 +314,19 @@ export default function StreakTracker() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-col items-center justify-center space-y-2">
-            <div className="shadow-xl shadow-[#221f32] rounded-3xl  overflow-hiden flex">
-            <Image
-            src={"/images/DarkRank.jpg"}
-            alt="Dark Rank"
-            className="h-40 w-40 object-cover overflow-hidden rounded-3xl pointer-evenets-none"
-            width={1120}
-            height={1120}/>
+            <div className="shadow-xl shadow-[#000000] rounded-3xl overflow-hidden flex">
+              <Image
+                src={getRankImage(streakData.rank)}
+                alt="Dark Rank"
+                className="h-40 w-40 object-cover overflow-hidden rounded-3xl pointer-events-none"
+                width={1120}
+                height={1120}
+              />
             </div>
 
             <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="relative">
               <div
-                className={`  flex items-center mt-5 justify-center text-5xl font-bold  text-white`}
+                className={`flex items-center mt-5 justify-center text-5xl font-bold text-white`}
               >
                 {streakData.count}
               </div>
@@ -357,7 +360,7 @@ export default function StreakTracker() {
               onClick={handleCheckIn}
               disabled={!canCheckIn}
               size="lg"
-              className={`w-full rounded-full p-7 ${canCheckIn ? `bg-neutral-200 text-black ${getRankColor(streakData.rank)}` : "bg-neutral-500 text-white"}`}
+              className={`w-full rounded-full p-7 ${canCheckIn ? `bg-neutral-200 text-black ${getRankColor(streakData.rank)}` : "bg-neutral-800 text-white"}`}
             >
               {canCheckIn ? (
                 <>
@@ -421,6 +424,101 @@ export default function StreakTracker() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Rank Up Congratulations Modal */}
+      <AnimatePresence>
+        {showCongratulations && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 max-w-md mx-4 text-center shadow-2xl border border-slate-700"
+            >
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="mb-4 flex justify-center"
+              >
+                <PartyPopper className="h-12 w-12 text-yellow-400" />
+              </motion.div>
+              
+              <motion.h2
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="text-3xl font-bold mb-2 text-white"
+              >
+                Congratulations!
+              </motion.h2>
+              
+              <motion.p
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-xl mb-6 text-slate-200"
+              >
+                You've reached <span className={`font-bold ${getRankColor(newRankAchieved)} bg-clip-text text-transparent`}>{newRankAchieved} Rank</span>!
+              </motion.p>
+              
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+                className="mb-6 relative flex justify-center"
+              >
+                <div className="h-48 w-48 rounded-full bg-slate-700 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10" />
+                <Image
+                  src={getRankImage(newRankAchieved)}
+                  alt={`${newRankAchieved} Rank Badge`}
+                  width={160}
+                  height={160}
+                  className="h-40 w-40 object-cover rounded-2xl shadow-lg"
+                />
+                
+                <motion.div
+                  className="absolute inset-0"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [0, 0.5, 0] }}
+                  transition={{ delay: 0.5, duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                >
+                  <div className="h-full w-full rounded-2xl bg-white opacity-30 blur-xl" />
+                </motion.div>
+              </motion.div>
+              
+              <motion.p
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="text-slate-300 mb-8"
+              >
+                Keep going! Your dedication is paying off!
+              </motion.p>
+              
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.7 }}
+              >
+                <Button
+                  onClick={() => setShowCongratulations(false)}
+                  className={`w-full py-6 ${getRankColor(newRankAchieved)} hover:opacity-90 text-white font-bold rounded-xl transition-all duration-300 ease-out shadow-lg`}
+                >
+                  <motion.span
+                    initial={{ opacity: 1 }}
+                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center justify-center"
+                  >
+                    <Trophy className="mr-2 h-5 w-5" /> Continue
+                  </motion.span>
+                </Button>
+              </motion.div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

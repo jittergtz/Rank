@@ -428,63 +428,52 @@ export default function StreakTracker() {
       {/* Rank Up Congratulations Modal */}
       <AnimatePresence>
         {showCongratulations && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="fixed inset-0 flex items-center justify-center z-50  bg-opacity-50">
             <motion.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 max-w-md mx-4 text-center shadow-2xl border border-slate-700"
+              className="backdrop-blur-3xl rounded-3xl p-8 max-w-md mx-4 text-center shadow-2xl border border-neutral-800"
             >
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="mb-4 flex justify-center"
-              >
-                <PartyPopper className="h-12 w-12 text-yellow-400" />
-              </motion.div>
+            
               
               <motion.h2
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-3xl font-bold mb-2 text-white"
+                className="text-3xl font-bold mb-2 text-shadow-lg text-transparent bg-clip-text bg-gradient-to-b from-[#feffff] to-[#949494]"
               >
-                Congratulations!
+                Congratulations
               </motion.h2>
               
               <motion.p
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="text-xl mb-6 text-slate-200"
+                className="text-xl mb-6 text-gray-400"
               >
-                You've reached <span className={`font-bold ${getRankColor(newRankAchieved)} bg-clip-text text-transparent`}>{newRankAchieved} Rank</span>!
+                You've reached <span className={` ${getRankColor(newRankAchieved)} bg-clip-text text-transparent`}>{newRankAchieved} Rank</span>!
               </motion.p>
               
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+              
                 className="mb-6 relative flex justify-center"
               >
-                <div className="h-48 w-48 rounded-full bg-slate-700 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10" />
+               
                 <Image
                   src={getRankImage(newRankAchieved)}
                   alt={`${newRankAchieved} Rank Badge`}
                   width={160}
                   height={160}
-                  className="h-40 w-40 object-cover rounded-2xl shadow-lg"
+                  className="h-40 w-40 object-cover rounded-2xl z-50 shadow-lg pointer-events-none"
                 />
                 
                 <motion.div
                   className="absolute inset-0"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 0.5, 0] }}
-                  transition={{ delay: 0.5, duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                
                 >
-                  <div className="h-full w-full rounded-2xl bg-white opacity-30 blur-xl" />
+                  <div className="h-full w-full rounded-3xl bg-blue-600 z-0 opacity-80 blur-xl" />
                 </motion.div>
               </motion.div>
               
@@ -504,14 +493,14 @@ export default function StreakTracker() {
               >
                 <Button
                   onClick={() => setShowCongratulations(false)}
-                  className={`w-full py-6 ${getRankColor(newRankAchieved)} hover:opacity-90 text-white font-bold rounded-xl transition-all duration-300 ease-out shadow-lg`}
+                  className={`w-full py-6 ${getRankColor(newRankAchieved)} hover:opacity-90 text-black font-bold rounded-full transition-all duration-300 ease-out shadow-lg`}
                 >
                   <motion.span
                     initial={{ opacity: 1 }}
                     whileHover={{ scale: 1.05 }}
                     className="flex items-center justify-center"
                   >
-                    <Trophy className="mr-2 h-5 w-5" /> Continue
+                    <Trophy className="mr-2 h-4 w-4" /> Continue
                   </motion.span>
                 </Button>
               </motion.div>

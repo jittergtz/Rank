@@ -18,6 +18,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import Image from "next/image"
 
 interface StreakData {
   count: number
@@ -29,7 +30,7 @@ interface StreakData {
 }
 
 const RANKS = [
-  { name: "Beginner", threshold: 0, color: "bg-lime-300" },
+  { name: "Beginner", threshold: 0, color: "bg-gradient-to-tl from-[#2D21D3] to-[#9E61CC]" },
   { name: "Bronze", threshold: 5, color: "bg-amber-400" },
   { name: "Silver", threshold: 10, color: "bg-slate-400" },
   { name: "Gold", threshold: 20, color: "bg-yellow-500" },
@@ -311,20 +312,22 @@ export default function StreakTracker() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-col items-center justify-center space-y-2">
+            <div className="shadow-xl shadow-[#221f32] rounded-3xl  overflow-hiden flex">
+            <Image
+            src={"/images/DarkRank.jpg"}
+            alt="Dark Rank"
+            className="h-40 w-40 object-cover overflow-hidden rounded-3xl pointer-evenets-none"
+            width={1120}
+            height={1120}/>
+            </div>
+
             <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="relative">
               <div
-                className={`w-32 h-32 rounded-full flex items-center justify-center text-4xl font-bold ${getRankColor(streakData.rank)} text-white`}
+                className={`  flex items-center mt-5 justify-center text-5xl font-bold  text-white`}
               >
                 {streakData.count}
               </div>
-              <motion.div
-                className="absolute -top-2 -right-2 bg-white dark:bg-slate-800 rounded-full p-1 shadow-md"
-                initial={{ rotate: -10 }}
-                animate={{ rotate: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <Trophy className="w-8 h-8 text-yellow-500" />
-              </motion.div>
+            
             </motion.div>
             <div className="text-lg font-semibold">Day{streakData.count !== 1 ? "s" : ""}</div>
           </div>
@@ -354,7 +357,7 @@ export default function StreakTracker() {
               onClick={handleCheckIn}
               disabled={!canCheckIn}
               size="lg"
-              className={`w-full ${canCheckIn ? "bg-lime-300 hover:bg-lime-400 text-white" : "bg-neutral-500 text-white"}`}
+              className={`w-full rounded-full p-7 ${canCheckIn ? `bg-neutral-200 text-black ${getRankColor(streakData.rank)}` : "bg-neutral-500 text-white"}`}
             >
               {canCheckIn ? (
                 <>

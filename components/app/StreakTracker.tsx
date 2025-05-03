@@ -24,6 +24,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import { TaskSelector } from "./TaskSelector"
 import { TaskStatistics } from "./TaskStatistics"
 import { TaskCreator } from "./TaskCreator"
+import { RANKS } from "@/types/streak"
 
 
 // --- Component Imports (Assuming these exist based on File 1) ---
@@ -69,14 +70,6 @@ export interface Task {
 // --- End Type Definitions ---
 
 // --- Constants (Using File 2's RANKS as requested) ---
-const RANKS = [
-  { name: "Beginner", threshold: 0, color: "bg-gradient-to-l from-[#690B0B] to-[#FF1174]", img: "/images/SevenRank.jpg" },
-  { name: "Bronze", threshold: 1, color: "bg-gradient-to-r from-[#14ADFF] to-[#3446D1]", img: "/images/BronzeRank.jpg" },
-  { name: "Silver", threshold: 10, color: "bg-slate-400", img: "/images/HelloRank.jpg" },
-  { name: "Gold", threshold: 20, color: "bg-yellow-500", img: "/images/SevenRank.jpg" },
-  { name: "Platinum", threshold: 40, color: "bg-emerald-500", img: "/images/HelloRank.jpg" },
-  { name: "Diamond", threshold: 80, color: "bg-blue-500", img: "/images/HelloRank.jpg" },
-] as const // Use 'as const' for stricter typing on names
 
 const RECOVERY_MILESTONES = [10, 20, 30, 50, 75, 100, 150, 200, 300, 365]
 const RECOVERY_WINDOW_HOURS = 24
@@ -689,7 +682,7 @@ export default function StreakTracker() {
                   size="lg"
                   className={`w-full rounded-full p-7 font-semibold ${
                      !selectedTask.active
-                       ? "bg-gray-500 text-gray-300 cursor-not-allowed" // Style for inactive task
+                       ? "bg-neutral-700 text-gray-300 cursor-not-allowed" // Style for inactive task
                        : canCheckIn
                          ? `bg-neutral-200 text-black ${getRankColor(selectedTask.rank)} hover:opacity-90` // Style for can check-in (active)
                          : "bg-neutral-800 text-white cursor-not-allowed" // Style for already checked-in (active)

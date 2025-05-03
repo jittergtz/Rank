@@ -36,12 +36,16 @@ export interface StreakHistoryEntry {
   }
   
   export const RANKS = [
-    { name: "Beginner", threshold: 0, color: "bg-gradient-to-l from-[#14EFFF] to-[#FFA114]", img: "/images/HelloRank.jpg" },
-    { name: "Bronze", threshold: 1, color: "bg-gradient-to-r from-[#14ADFF] to-[#3446D1]", img: "/images/BronzeRank.jpg" },
-    { name: "Silver", threshold: 10, color: "bg-slate-400", img: "/images/HelloRank.jpg" },
-    { name: "Gold", threshold: 20, color: "bg-yellow-500", img: "/images/HelloRank.jpg" },
-    { name: "Platinum", threshold: 40, color: "bg-emerald-500", img: "/images/HelloRank.jpg" },
-    { name: "Diamond", threshold: 80, color: "bg-blue-500", img: "/images/HelloRank.jpg" },
+    { name: "Beginner", threshold: 4, color: "bg-gradient-to-l from-[#14EFFF] to-[#FFA114]", img: "/images/HelloRank.jpg" },
+    { name: "Bronze", threshold: 10, color: "bg-gradient-to-r from-[#14ADFF] to-[#3446D1]", img: "/images/OneRank.jpg" },
+    { name: "Silver", threshold: 10, color: "bg-slate-400", img: "/images/TwoRank.jpg" },
+    { name: "Gold", threshold: 20, color: "bg-yellow-500", img: "/images/TenRank.jpg" },
+    { name: "Platinum", threshold: 40, color: "bg-emerald-500", img: "/images/NineRank.jpg" },
+    { name: "Diamond", threshold: 65, color: "bg-blue-500", img: "/images/DiamondRank.jpg" },
+    { name: "Ultra", threshold: 100, color: "bg-blue-500", img: "/images/UltraRank.jpg" },
+    { name: "Mythos", threshold: 150, color: "bg-blue-500", img: "/images/ElevenRank.jpg" },
+    { name: "Unstopable", threshold: 200, color: " bg-yellow-500 ", img: "/images/ThreeRank.jpg" },
+    
   ]
   
   // Milestones at which users earn recovery tokens

@@ -22,11 +22,13 @@ interface TaskCreatorProps {
   tasks: Task[]
   onCreateTask: (name: string, description: string) => void
   onEditTask: (taskId: string, name: string, description: string) => void
-  onDeleteTask: (taskId: string) => void
-  openDeleteDialog: (task: Task) => void
+  onDeleteTask?: (taskId: string) => void
+  openDeleteDialog: any
+  setActiveTask?: (taskId: string) => void
+  selectedTaskId: string
 }
 
-export function TaskCreator({ tasks, onCreateTask, onEditTask, onDeleteTask, openDeleteDialog }: TaskCreatorProps) {
+export function TaskCreator({ tasks, onCreateTask, onEditTask, onDeleteTask, setActiveTask, selectedTaskId ,openDeleteDialog }: TaskCreatorProps) {
   const [showDialog, setShowDialog] = useState(false)
   const [taskName, setTaskName] = useState("")
   const [taskDescription, setTaskDescription] = useState("")
@@ -155,7 +157,6 @@ function TaskItem({ task, onEdit, onDelete }: TaskItemProps) {
             </Badge>
           )}
           <div className="flex items-center gap-1">
-            <img src={getRankImage(task.rank) || "/placeholder.svg"} alt={task.rank} className="w-5 h-5" />
             <Badge className={`${getRankColor(task.rank)} text-xs`}>{task.rank}</Badge>
           </div>
         </div>

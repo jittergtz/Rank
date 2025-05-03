@@ -108,7 +108,7 @@ export default function StreakTracker() {
   const [selectedTaskId, setSelectedTaskId] = useState<string>(DEFAULT_TASK.id)
   const [loading, setLoading] = useState(true)
   const [canCheckIn, setCanCheckIn] = useState(false)
-  const [nextRankInfo, setNextRankInfo] = useState(RANKS[1]) // Renamed from nextRank to avoid conflict
+  const [nextRankInfo, setNextRankInfo] = useState<(typeof RANKS)[number]>(RANKS[1]) // Accept any rank object from RANKS
   const [progress, setProgress] = useState(0)
   const [recoveryAvailable, setRecoveryAvailable] = useState(false)
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false)
@@ -253,7 +253,7 @@ export default function StreakTracker() {
                 ...task,
                 count: 0,
                 lastCheckIn: null, // Clear last check-in after reset
-                rank: "Beginner", // Reset rank
+                rank: "Beginner" as RankName, // Reset rank with explicit type
                 previousStreak: task.count, // Store the lost streak count
                 lastReset: resetDate,
                 streakHistory: [...task.streakHistory, historyEntry],
@@ -781,15 +781,15 @@ export default function StreakTracker() {
               <CardContent className="space-y-4 pt-2">
                  {/* Task Creator/Editor/List Component - From File 1 */}
                  <TaskCreator
-                    tasks={tasks}
-                    onCreateTask={createNewTask}
-                    onEditTask={editTask}
-                    // onDeleteTask={deleteTask} // Use openDeleteTaskDialog to show confirmation
-                    openDeleteDialog={openDeleteTaskDialog}
-                    // Add any other props needed by TaskCreator, like setActiveTask if it has activation buttons
-                    setActiveTask={setActiveTask}
-                    selectedTaskId={selectedTaskId} // Pass selected ID for highlighting, etc.
-                 />
+                tasks={tasks}
+                onCreateTask={createNewTask}
+                onEditTask={editTask}
+                // onDeleteTask={deleteTask} // Use openDeleteTaskDialog to show confirmation
+                openDeleteDialog={openDeleteTaskDialog}
+                // Add any other props needed by TaskCreator, like setActiveTask if it has activation buttons
+                setActiveTask={setActiveTask}
+                selectedTaskId={selectedTaskId} // Pass selected ID for highlighting, etc.
+                            />
               </CardContent>
            </TabsContent>
 

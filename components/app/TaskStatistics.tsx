@@ -13,14 +13,15 @@ import {
   Line,
 } from "recharts"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { RankName } from "./StreakTracker"
 
 
 interface TaskStatisticsProps {
   selectedTask: Task
   statsPeriod: "week" | "month" | "all"
   setStatsPeriod: (period: "week" | "month" | "all") => void
-  getRankImage: (rankName: string) => string
-  getRankColor: (rankName: string) => string
+  getRankImage: (rankName: RankName) => string 
+  getRankColor: (rankName: RankName) => string 
 }
 
 export function TaskStatistics({
@@ -266,7 +267,7 @@ export function TaskStatistics({
                   rank.name === selectedTask.rank ? "bg-primary/10 border border-primary/30" : ""
                 }`}
               >
-                <img src={getRankImage(rank.name) || "/placeholder.svg"} alt={rank.name} className="w-12 h-12" />
+                <img src={getRankImage(rank.name as RankName) || "/placeholder.svg"} alt={rank.name} className="w-12 h-12" />
                 <span className="text-xs font-medium mt-1">{rank.name}</span>
                 <span className="text-xs text-muted-foreground">{rank.threshold}+ days</span>
               </div>
@@ -284,13 +285,13 @@ export function TaskStatistics({
                 <div key={index} className="flex items-center gap-2 text-sm">
                   <div className="text-muted-foreground">{entry.date}:</div>
                   <div className="flex items-center gap-1">
-                    <img src={getRankImage(entry.from) || "/placeholder.svg"} alt={entry.from} className="w-5 h-5" />
-                    <span className={`px-2 py-0.5 rounded-full text-xs ${getRankColor(entry.from)} text-white`}>
+                    <img src={getRankImage(entry.from as RankName) || "/placeholder.svg"} alt={entry.from} className="w-5 h-5" />
+                    <span className={`px-2 py-0.5 rounded-full text-xs ${getRankColor(entry.from as RankName)} text-white`}>
                       {entry.from}
                     </span>
                     <span>→</span>
-                    <img src={getRankImage(entry.to) || "/placeholder.svg"} alt={entry.to} className="w-5 h-5" />
-                    <span className={`px-2 py-0.5 rounded-full text-xs ${getRankColor(entry.to)} text-white`}>
+                    <img src={getRankImage(entry.to as RankName) || "/placeholder.svg"} alt={entry.to} className="w-5 h-5" />
+                    <span className={`px-2 py-0.5 rounded-full text-xs ${getRankColor(entry.to as RankName)} text-white`}>
                       {entry.to}
                     </span>
                   </div>

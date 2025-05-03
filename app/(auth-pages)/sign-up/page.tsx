@@ -19,8 +19,9 @@ export default async function Signup(props: {
   }
 
   return (
-    <>
-      <form className="flex flex-col min-w-64 max-w-64 mx-auto">
+<main className="h-screen w-full p-10 flex justify-center items-center">
+<form className="flex-1  flex flex-col min-w-64">
+      <Link href="/" className="absolute top-10 left-10 hover:bg-neutral-800 p-2 px-4 rounded-lg">back</Link>
         <h1 className="text-2xl font-medium">Sign up</h1>
         <p className="text-sm text text-foreground">
           Already have an account?{" "}
@@ -28,7 +29,7 @@ export default async function Signup(props: {
             Sign in
           </Link>
         </p>
-        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+        <div  className="flex flex-col gap-2 [&>input]:mb-3 mt-8 bg-neutral-900 border border-neutral-700 p-4 rounded-xl">
           <Label htmlFor="email">Email</Label>
           <Input name="email" placeholder="you@example.com" required />
           <Label htmlFor="password">Password</Label>
@@ -46,6 +47,6 @@ export default async function Signup(props: {
         </div>
       </form>
   
-    </>
+    </main>
   );
 }

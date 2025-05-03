@@ -9,6 +9,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;
   return (
     <main className="h-screen w-full p-10 flex justify-center items-center">
+    <Link href="/" className="absolute top-10 left-10 hover:bg-neutral-800 p-2 px-4 rounded-lg">back</Link>
     <form className="flex-1  flex flex-col min-w-64">
       <h1 className="text-2xl font-medium">Sign in</h1>
       <p className="text-sm text-foreground">
@@ -17,9 +18,9 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
           Sign up
         </Link>
       </p>
-      <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+      <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8 bg-neutral-900 border border-neutral-700 p-4 rounded-xl">
         <Label htmlFor="email">Email</Label>
-        <Input name="email" placeholder="you@example.com" required />
+        <Input  className="rounded-xl bg-neutral-950" name="email" placeholder="you@example.com" required />
         <div className="flex justify-between items-center">
           <Label htmlFor="password">Password</Label>
           <Link
@@ -34,7 +35,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
           name="password"
           placeholder="Your password"
           required
-          className="bg-neutral-200"
+          className="rounded-xl bg-neutral-950"
         />
         <SubmitButton pendingText="Signing In..." formAction={signInAction}>
           Sign in

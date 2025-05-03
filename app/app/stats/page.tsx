@@ -20,7 +20,7 @@ export default async function StatsPage() {
   }
 
   return (
-    <main className="container mx-auto py-6 px-4">
+    <main className="container pb-40 mx-auto py-6 px-4">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <Button variant="outline" size="sm" asChild>
